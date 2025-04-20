@@ -11,33 +11,37 @@ const Create = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var addUser = { name, email, age };
+    const addUser = { name, email, age };
     console.log(addUser);
-
-    const response = await fetch("http://localhost:5000/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(addUser),
-    });
-
-    const result = await response.json();
-    console.log(result);
-
-    if (!response.ok) {
-      console.log(result.error);
-      setError(result.error);
-    }
-    if (response.ok) {
+  
+    try {
+      const response = await fetch("http://localhost:5000/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addUser),
+      });
+  
+      const result = await response.json();
       console.log(result);
-      setName("");
-      setEmail("");
-      setAge(0);
-      setError("");
-      navigate("/read");
+  
+      if (!response.ok) {
+        console.log(result.error);
+        setError(result.error);
+      } else {
+        setName("");
+        setEmail("");
+        setAge(0);
+        setError("");
+        navigate("/read");
+      }
+    } catch (error) {
+      console.error("Something went wrong:", error);
+      setError("Failed to connect to the server. Please try again later.");
     }
   };
+  
 
   return (
     <div class="container my-2">
