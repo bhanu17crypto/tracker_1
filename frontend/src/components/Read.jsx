@@ -16,6 +16,7 @@ const Read = () => {
     }
     if (response.ok) {
       console.log("deleted", response.ok);
+      console.log("deleted", response.ok);
       setError("Deleted Successfully");
       setTimeout(() => {
         setError("");
